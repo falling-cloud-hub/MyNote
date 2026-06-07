@@ -1,0 +1,307 @@
+.sidebar {
+  width: var(--sidebar-width);
+  min-width: var(--sidebar-width);
+  background: var(--bg-secondary);
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+/* 新建笔记按钮 */
+.new-note-btn {
+  margin: 12px;
+  padding: 10px;
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  transition: background 0.2s;
+}
+
+.new-note-btn:hover {
+  background: var(--accent-hover);
+}
+
+/* 分区 */
+.sidebar-section {
+  padding: 4px 0;
+}
+
+.sidebar-divider {
+  height: 1px;
+  background: var(--border);
+  margin: 4px 12px;
+}
+
+.section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 16px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.add-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-secondary);
+  font-size: 16px;
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+.add-btn:hover {
+  background: var(--bg-tertiary);
+  color: var(--text-primary);
+}
+
+/* 笔记列表 */
+.sidebar-item {
+  padding: 8px 16px;
+  cursor: pointer;
+  transition: background 0.15s;
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.sidebar-item:hover {
+  background: var(--bg-tertiary);
+}
+
+.sidebar-item.active {
+  background: rgba(79, 140, 255, 0.12);
+  color: var(--accent);
+}
+
+.note-item {
+  justify-content: space-between;
+}
+
+.note-title {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.note-date {
+  font-size: 11px;
+  color: var(--text-secondary);
+  flex-shrink: 0;
+}
+
+.note-delete {
+  opacity: 0;
+  background: none;
+  border: none;
+  color: var(--danger);
+  font-size: 16px;
+  padding: 0 4px;
+  flex-shrink: 0;
+}
+
+.note-item:hover .note-delete {
+  opacity: 1;
+}
+
+/* 文件夹树 */
+.folder-item {
+  display: flex;
+  align-items: center;
+  padding: 6px 16px;
+  cursor: pointer;
+  font-size: 13px;
+  gap: 6px;
+  transition: background 0.15s;
+}
+
+.folder-item:hover {
+  background: var(--bg-tertiary);
+}
+
+.folder-item.active {
+  background: rgba(79, 140, 255, 0.12);
+  color: var(--accent);
+}
+
+.folder-arrow {
+  font-size: 10px;
+  width: 16px;
+  color: var(--text-secondary);
+  cursor: pointer;
+}
+
+.folder-icon {
+  font-size: 14px;
+}
+
+.folder-name {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.note-count {
+  margin-left: 6px;
+  font-size: 11px;
+  color: var(--text-secondary);
+  background: var(--bg-tertiary);
+  padding: 1px 6px;
+  border-radius: 10px;
+}
+
+.folder-delete {
+  opacity: 0;
+  background: none;
+  border: none;
+  font-size: 12px;
+  padding: 0 2px;
+  flex-shrink: 0;
+}
+
+.folder-item:hover .folder-delete {
+  opacity: 1;
+}
+
+/* 新建表单 */
+.new-item-form {
+  padding: 8px 16px;
+}
+
+.new-item-form input {
+  width: 100%;
+  padding: 8px;
+  background: var(--bg-primary);
+  border: 1px solid var(--accent);
+  border-radius: 6px;
+  color: var(--text-primary);
+  font-size: 13px;
+  outline: none;
+}
+
+.form-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 6px;
+}
+
+.form-actions button {
+  padding: 4px 14px;
+  border-radius: 4px;
+  font-size: 12px;
+  border: 1px solid var(--border);
+  background: var(--bg-tertiary);
+  color: var(--text-primary);
+}
+
+.form-actions button:first-child {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+
+/* 标签 */
+.tag-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6px 16px;
+  cursor: pointer;
+  font-size: 13px;
+  transition: background 0.15s;
+}
+
+.tag-item:hover {
+  background: var(--bg-tertiary);
+}
+
+.tag-item.active {
+  background: rgba(79, 140, 255, 0.12);
+  color: var(--accent);
+}
+
+.tag-delete {
+  opacity: 0;
+  background: none;
+  border: none;
+  color: var(--danger);
+  font-size: 16px;
+  padding: 0 4px;
+}
+
+.tag-item:hover .tag-delete {
+  opacity: 1;
+}
+
+.empty-hint {
+  padding: 12px 16px;
+  font-size: 12px;
+  color: var(--text-secondary);
+  font-style: italic;
+}
+
+/* 删除确认弹窗 */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+}
+
+.modal-box {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 24px 28px;
+  text-align: center;
+  min-width: 280px;
+}
+
+.modal-box p {
+  margin-bottom: 8px;
+  font-size: 14px;
+}
+
+.modal-warning {
+  color: var(--danger);
+  font-size: 12px !important;
+}
+
+.modal-actions {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin-top: 16px;
+}
+
+.modal-actions button {
+  padding: 8px 20px;
+  border-radius: 6px;
+  font-size: 13px;
+  border: 1px solid var(--border);
+  background: var(--bg-tertiary);
+  color: var(--text-primary);
+}
+
+.btn-danger {
+  background: var(--danger) !important;
+  border-color: var(--danger) !important;
+  color: #fff !important;
+}
