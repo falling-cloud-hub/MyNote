@@ -64,3 +64,127 @@ input, textarea, select {
 ::-webkit-scrollbar-thumb:hover {
   background: #c0b6a8;
 }
+
+/* ========== 手机端适配 ========== */
+@media (max-width: 768px) {
+  :root {
+    --sidebar-width: 260px;
+    --header-height: 48px;
+  }
+
+  /* 侧边栏变为浮层 */
+  .dashboard-body {
+    position: relative;
+  }
+
+  .sidebar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    z-index: 50;
+    box-shadow: 4px 0 20px rgba(0, 0, 0, 0.15);
+    transition: transform 0.25s ease;
+    transform: translateX(0);
+  }
+
+  .sidebar.collapsed {
+    transform: translateX(-100%);
+    width: var(--sidebar-width) !important;
+    min-width: var(--sidebar-width) !important;
+  }
+
+  .sidebar-toggle {
+    right: -36px;
+    width: 32px;
+    height: 32px;
+    top: 12px;
+    font-size: 14px;
+    border-radius: 0 6px 6px 0;
+    border-left: none;
+  }
+
+  /* 编辑器占满 */
+  .editor-area {
+    width: 100%;
+  }
+
+  /* 编辑器工具栏紧凑 */
+  .editor-toolbar {
+    flex-direction: column;
+    gap: 8px;
+    padding: 10px 14px;
+    align-items: stretch;
+  }
+
+  .toolbar-actions {
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .toolbar-btn {
+    padding: 6px 10px;
+    font-size: 12px;
+    gap: 3px;
+  }
+
+  .toolbar-btn .btn-icon {
+    font-size: 14px;
+  }
+
+  .title-input {
+    font-size: 18px;
+  }
+
+  .folder-select {
+    font-size: 12px;
+    padding: 6px 8px;
+  }
+
+  /* 视图模式栏 */
+  .view-mode-bar {
+    padding: 6px 14px;
+    gap: 2px;
+  }
+
+  .view-mode-btn {
+    padding: 5px 10px;
+    font-size: 12px;
+  }
+
+  /* Header */
+  .dashboard-header {
+    padding: 0 12px;
+  }
+
+  .logo-icon {
+    width: 130px;
+    height: 32px;
+  }
+
+  .username {
+    display: none;
+  }
+
+  /* AI 面板全宽 */
+  .ai-panel {
+    width: 100%;
+  }
+
+  /* 设置面板 */
+  .settings-panel {
+    width: 95vw;
+    max-height: 90vh;
+    overflow-y: auto;
+  }
+
+  /* 标签栏 */
+  .tag-bar {
+    padding: 6px 14px;
+  }
+
+  /* 图片输入栏 */
+  .image-input-bar {
+    padding: 8px 14px;
+  }
+}

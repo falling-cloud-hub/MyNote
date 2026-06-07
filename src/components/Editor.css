@@ -6,6 +6,40 @@
   background: var(--bg-editor);
 }
 
+/* 视图模式切换栏 */
+.view-mode-bar {
+  display: flex;
+  gap: 4px;
+  padding: 8px 24px;
+  background: var(--bg-header);
+  border-bottom: 1px solid var(--border-light);
+}
+
+.view-mode-btn {
+  padding: 6px 16px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--bg-primary);
+  color: var(--text-secondary);
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.view-mode-btn:hover {
+  background: var(--bg-tertiary);
+  color: var(--text-primary);
+}
+
+.view-mode-btn.active {
+  background: var(--accent);
+  color: #fff;
+  border-color: var(--accent);
+}
+
 .empty-editor {
   align-items: center;
   justify-content: center;

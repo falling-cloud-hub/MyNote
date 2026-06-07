@@ -18,6 +18,27 @@
   z-index: 10;
 }
 
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.mobile-menu-btn {
+  display: none;
+  background: none;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 4px 10px;
+  font-size: 18px;
+  cursor: pointer;
+  color: var(--text-primary);
+}
+
+.mobile-menu-btn:hover {
+  background: var(--bg-tertiary);
+}
+
 .logo {
   display: flex;
   align-items: center;
@@ -91,4 +112,15 @@
 .toolbar-btn:hover {
   background: var(--bg-tertiary);
   color: var(--text-primary);
+}
+
+/* 手机端适配 */
+@media (max-width: 768px) {
+  .mobile-menu-btn {
+    display: flex;
+  }
+
+  .dashboard-body {
+    position: relative;
+  }
 }

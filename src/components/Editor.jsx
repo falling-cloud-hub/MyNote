@@ -14,6 +14,7 @@ export default function Editor({ note, folders, tags, onDataChange, onNoteChange
   const [showTagPicker, setShowTagPicker] = useState(false)
   const [showImageInput, setShowImageInput] = useState(false)
   const [imageUrl, setImageUrl] = useState('')
+  const [viewMode, setViewMode] = useState('live') // 'edit' | 'live' | 'preview'
   const fileInputRef = useRef(null)
   const saveTimer = useRef(null)
   const noteIdRef = useRef(null)
@@ -165,6 +166,19 @@ export default function Editor({ note, folders, tags, onDataChange, onNoteChange
 
   return (
     <main className="editor-area" onPaste={handlePaste}>
+      {/* 视图模式切换行 */}
+      <div className="view-mode-bar">
+        <button className={`view-mode-btn ${viewMode === 'edit' ? 'active' : ''}`} onClick={() => setViewMode('edit')}>
+          ✏️ 编辑
+        </button>
+        <button className={`view-mode-btn ${viewMode === 'live' ? 'active' : ''}`} onClick={() => setViewMode('live')}>
+          📑 分屏
+        </button>
+        <button className={`view-mode-btn ${viewMode === 'preview' ? 'active' : ''}`} onClick={() => setViewMode('preview')}>
+          👁️ 预览
+        </button>
+      </div>
+
       {/* 工具栏 */}
       <div className="editor-toolbar">
         <input className="title-input" value={title} onChange={handleTitleChange} placeholder="笔记标题..." />
@@ -236,8 +250,9 @@ export default function Editor({ note, folders, tags, onDataChange, onNoteChange
           value={content}
           onChange={handleContentChange}
           height="100%"
-          preview="live"
+          preview={viewMode}
           visibleDragbar={false}
+          hideToolbar={false}
         />
       </div>
     </main>

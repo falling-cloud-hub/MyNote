@@ -26,6 +26,9 @@ export default function Sidebar({
   const [folderParentId, setFolderParentId] = useState(null)
   const [expandedFolders, setExpandedFolders] = useState(new Set())
   const [deleteConfirm, setDeleteConfirm] = useState(null) // { type, id, name }
+  const [deleteMode, setDeleteMode] = useState(false)
+  const [checkedNotes, setCheckedNotes] = useState(new Set())
+  const [nestedFolderLimit, setNestedFolderLimit] = useState(false)
 
   // ===== 笔记操作 =====
   const createNote = async (folderId = null) => {
@@ -52,9 +55,40 @@ export default function Sidebar({
     onDataChange()
   }
 
+  // 批量删除选中笔记
+  const deleteCheckedNotes = async () => {
+    if (checkedNotes.size === 0) return
+    for (const id of checkedNotes) {
+      await supabase.from('notes').delete().eq('id', id)
+    }
+    if (activeNote && checkedNotes.has(activeNote.id)) onSelectNote(null)
+    setCheckedNotes(new Set())
+    setDeleteMode(false)
+    setDeleteConfirm(null)
+    onDataChange()
+  }
+
+  const toggleCheckNote = (noteId) => {
+    setCheckedNotes(prev => {
+      const next = new Set(prev)
+      if (next.has(noteId)) next.delete(noteId)
+      else next.add(noteId)
+      return next
+    })
+  }
+
   // ===== 文件夹操作 =====
   const createFolder = async () => {
     if (!newFolderName.trim()) return
+    // 检查嵌套深度：如果选中的父文件夹本身已有父文件夹，拒绝
+    if (folderParentId) {
+      const parentFolder = folders.find(f => f.id === folderParentId)
+      if (parentFolder?.parent_id) {
+        setNestedFolderLimit(true)
+        setTimeout(() => setNestedFolderLimit(false), 3000)
+        return
+      }
+    }
     const { error } = await supabase
       .from('folders')
       .insert({
@@ -158,10 +192,34 @@ export default function Sidebar({
       <button className="sidebar-toggle" onClick={onToggle} title={collapsed ? '展开侧边栏' : '折叠侧边栏'}>
         {collapsed ? '☰' : '✕'}
       </button>
-      {/* 新建笔记按钮 */}
-      <button className="new-note-btn" onClick={() => createNote(activeFolder)}>
-        + 新建笔记
-      </button>
+      {/* 顶部操作栏 */}
+      <div className="sidebar-top-actions">
+        <button className="new-note-btn" onClick={() => { if (deleteMode) setDeleteMode(false); createNote(activeFolder) }}>
+          + 新建笔记
+        </button>
+        <button
+          className={`delete-mode-btn ${deleteMode ? 'active' : ''}`}
+          onClick={() => { setDeleteMode(!deleteMode); if (deleteMode) setCheckedNotes(new Set()) }}
+          title={deleteMode ? '退出删除模式' : '删除笔记'}
+        >
+          🗑️
+        </button>
+      </div>
+
+      {/* 嵌套限制提示 */}
+      {nestedFolderLimit && (
+        <div className="limit-warning">⚠️ 最多嵌套一层子文件夹</div>
+      )}
+
+      {/* 删除模式操作栏 */}
+      {deleteMode && checkedNotes.size > 0 && (
+        <div className="delete-bar">
+          <span>已选 {checkedNotes.size} 篇</span>
+          <button className="delete-execute-btn" onClick={() => setDeleteConfirm({ type: 'batch_notes', name: `${checkedNotes.size} 篇笔记` })}>
+            删除选中
+          </button>
+        </div>
+      )}
 
       {/* 笔记列表 */}
       <div className="sidebar-section">
@@ -175,20 +233,30 @@ export default function Sidebar({
           {displayNotes.map(note => (
             <div
               key={note.id}
-              className={`sidebar-item note-item ${activeNote?.id === note.id ? 'active' : ''}`}
-              onClick={() => onSelectNote(note)}
+              className={`sidebar-item note-item ${activeNote?.id === note.id ? 'active' : ''} ${deleteMode ? 'delete-mode-item' : ''}`}
+              onClick={() => deleteMode ? toggleCheckNote(note.id) : onSelectNote(note)}
             >
+              {deleteMode && (
+                <input
+                  type="checkbox"
+                  checked={checkedNotes.has(note.id)}
+                  onChange={() => toggleCheckNote(note.id)}
+                  className="note-checkbox"
+                />
+              )}
               <span className="note-title">{note.title || '未命名'}</span>
               <span className="note-date">
                 {new Date(note.updated_at).toLocaleDateString('zh-CN')}
               </span>
-              <button
-                className="note-delete"
-                onClick={(e) => { e.stopPropagation(); deleteNote(note.id) }}
-                title="删除笔记"
-              >
-                ×
-              </button>
+              {!deleteMode && (
+                <button
+                  className="note-delete"
+                  onClick={(e) => { e.stopPropagation(); deleteNote(note.id) }}
+                  title="删除笔记"
+                >
+                  ×
+                </button>
+              )}
             </div>
           ))}
         </div>
@@ -288,6 +356,7 @@ export default function Sidebar({
                 onClick={() => {
                   if (deleteConfirm.type === 'folder') deleteFolder(deleteConfirm.id)
                   else if (deleteConfirm.type === 'tag') deleteTag(deleteConfirm.id)
+                  else if (deleteConfirm.type === 'batch_notes') deleteCheckedNotes()
                 }}
               >
                 删除

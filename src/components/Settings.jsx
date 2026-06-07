@@ -20,9 +20,13 @@ export default function Settings({ isOpen, onClose, deepseekKey, onDeepseekKeyCh
     if (data) setTokens(data)
   }
 
+  const [keySaved, setKeySaved] = useState(false)
+
   const saveKey = () => {
     onDeepseekKeyChange(keyInput.trim())
     localStorage.setItem('mynote_deepseek_key', keyInput.trim())
+    setKeySaved(true)
+    setTimeout(() => setKeySaved(false), 2500)
   }
 
   const generateToken = async () => {
@@ -66,7 +70,9 @@ export default function Settings({ isOpen, onClose, deepseekKey, onDeepseekKeyCh
             <p className="settings-hint">
               在 <a href="https://platform.deepseek.com/api_keys" target="_blank" rel="noopener">platform.deepseek.com</a> 免费获取
             </p>
-            <button className="settings-save-btn" onClick={saveKey}>💾 保存</button>
+            <button className={`settings-save-btn ${keySaved ? 'saved' : ''}`} onClick={saveKey} disabled={keySaved}>
+              {keySaved ? '✅ 已保存' : '💾 保存'}
+            </button>
           </div>
 
           <div className="settings-divider" />

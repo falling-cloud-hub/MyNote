@@ -124,11 +124,17 @@
   font-size: 14px;
   font-weight: 600;
   cursor: pointer;
-  transition: background 0.2s;
+  transition: all 0.3s;
 }
 
-.settings-save-btn:hover {
+.settings-save-btn:hover:not(:disabled) {
   background: var(--accent-hover);
+}
+
+.settings-save-btn.saved {
+  background: var(--bg-tertiary);
+  color: var(--text-muted);
+  cursor: default;
 }
 
 .settings-divider {

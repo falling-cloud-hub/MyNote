@@ -72,9 +72,14 @@ export default function Dashboard() {
   return (
     <div className="dashboard">
       <header className="dashboard-header">
-        <h1 className="logo">
-          <img src="/logo.svg" alt="MyNote" className="logo-icon" />
-        </h1>
+        <div className="header-left">
+          <button className="mobile-menu-btn" onClick={() => setSidebarCollapsed(!sidebarCollapsed)}>
+            ☰
+          </button>
+          <h1 className="logo">
+            <img src="/logo.svg" alt="MyNote" className="logo-icon" />
+          </h1>
+        </div>
         <div className="header-right">
           <button className="toolbar-btn" onClick={() => setSettingsOpen(true)} title="设置">
             ⚙️
