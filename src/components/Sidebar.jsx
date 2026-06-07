@@ -11,6 +11,8 @@ export default function Sidebar({
   activeNote,
   activeFolder,
   activeTag,
+  collapsed,
+  onToggle,
   onSelectNote,
   onSelectFolder,
   onSelectTag,
@@ -151,7 +153,11 @@ export default function Sidebar({
     : notes.filter(n => !n.folder_id)
 
   return (
-    <aside className="sidebar">
+    <aside className={`sidebar ${collapsed ? 'collapsed' : ''}`}>
+      {/* 折叠/展开按钮 */}
+      <button className="sidebar-toggle" onClick={onToggle} title={collapsed ? '展开侧边栏' : '折叠侧边栏'}>
+        {collapsed ? '☰' : '✕'}
+      </button>
       {/* 新建笔记按钮 */}
       <button className="new-note-btn" onClick={() => createNote(activeFolder)}>
         + 新建笔记

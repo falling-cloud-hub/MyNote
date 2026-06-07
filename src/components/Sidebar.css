@@ -7,6 +7,44 @@
   flex-direction: column;
   overflow-y: auto;
   overflow-x: hidden;
+  transition: width 0.25s ease, min-width 0.25s ease;
+  position: relative;
+}
+
+.sidebar.collapsed {
+  width: 0;
+  min-width: 0;
+  border-right: none;
+  overflow: hidden;
+}
+
+/* 折叠按钮 */
+.sidebar-toggle {
+  position: absolute;
+  top: 8px;
+  right: -28px;
+  width: 24px;
+  height: 24px;
+  background: var(--bg-header);
+  border: 1px solid var(--border);
+  border-left: none;
+  border-radius: 0 4px 4px 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 20;
+  font-size: 12px;
+  color: var(--text-secondary);
+  transition: background 0.2s;
+}
+
+.sidebar-toggle:hover {
+  background: var(--bg-tertiary);
+}
+
+.sidebar.collapsed .sidebar-toggle {
+  right: -28px;
 }
 
 /* 新建笔记按钮 */
@@ -33,7 +71,7 @@
 
 .sidebar-divider {
   height: 1px;
-  background: var(--border);
+  background: var(--border-light);
   margin: 4px 12px;
 }
 
@@ -43,7 +81,7 @@
   justify-content: space-between;
   padding: 8px 16px;
   font-size: 12px;
-  font-weight: 600;
+  font-weight: 700;
   color: var(--text-secondary);
   text-transform: uppercase;
   letter-spacing: 0.5px;
@@ -53,9 +91,10 @@
   background: transparent;
   border: none;
   color: var(--text-secondary);
-  font-size: 16px;
-  padding: 2px 6px;
+  font-size: 18px;
+  padding: 2px 8px;
   border-radius: 4px;
+  line-height: 1;
 }
 
 .add-btn:hover {
@@ -65,13 +104,15 @@
 
 /* 笔记列表 */
 .sidebar-item {
-  padding: 8px 16px;
+  padding: 7px 16px;
   cursor: pointer;
   transition: background 0.15s;
   font-size: 13px;
   display: flex;
   align-items: center;
   gap: 8px;
+  border-radius: 0 6px 6px 0;
+  margin-right: 6px;
 }
 
 .sidebar-item:hover {
@@ -79,8 +120,9 @@
 }
 
 .sidebar-item.active {
-  background: rgba(79, 140, 255, 0.12);
+  background: var(--accent-light);
   color: var(--accent);
+  font-weight: 600;
 }
 
 .note-item {
@@ -95,8 +137,8 @@
 }
 
 .note-date {
-  font-size: 11px;
-  color: var(--text-secondary);
+  font-size: 10px;
+  color: var(--text-muted);
   flex-shrink: 0;
 }
 
@@ -108,6 +150,7 @@
   font-size: 16px;
   padding: 0 4px;
   flex-shrink: 0;
+  cursor: pointer;
 }
 
 .note-item:hover .note-delete {
@@ -118,11 +161,13 @@
 .folder-item {
   display: flex;
   align-items: center;
-  padding: 6px 16px;
+  padding: 5px 16px;
   cursor: pointer;
   font-size: 13px;
   gap: 6px;
   transition: background 0.15s;
+  border-radius: 0 6px 6px 0;
+  margin-right: 6px;
 }
 
 .folder-item:hover {
@@ -130,14 +175,15 @@
 }
 
 .folder-item.active {
-  background: rgba(79, 140, 255, 0.12);
+  background: var(--accent-light);
   color: var(--accent);
+  font-weight: 600;
 }
 
 .folder-arrow {
   font-size: 10px;
   width: 16px;
-  color: var(--text-secondary);
+  color: var(--text-muted);
   cursor: pointer;
 }
 
@@ -154,7 +200,7 @@
 
 .note-count {
   margin-left: 6px;
-  font-size: 11px;
+  font-size: 10px;
   color: var(--text-secondary);
   background: var(--bg-tertiary);
   padding: 1px 6px;
@@ -168,6 +214,7 @@
   font-size: 12px;
   padding: 0 2px;
   flex-shrink: 0;
+  cursor: pointer;
 }
 
 .folder-item:hover .folder-delete {
@@ -181,9 +228,9 @@
 
 .new-item-form input {
   width: 100%;
-  padding: 8px;
+  padding: 8px 10px;
   background: var(--bg-primary);
-  border: 1px solid var(--accent);
+  border: 1.5px solid var(--accent);
   border-radius: 6px;
   color: var(--text-primary);
   font-size: 13px;
@@ -197,12 +244,14 @@
 }
 
 .form-actions button {
-  padding: 4px 14px;
-  border-radius: 4px;
+  padding: 5px 14px;
+  border-radius: 5px;
   font-size: 12px;
   border: 1px solid var(--border);
-  background: var(--bg-tertiary);
+  background: var(--bg-primary);
   color: var(--text-primary);
+  cursor: pointer;
+  transition: background 0.2s;
 }
 
 .form-actions button:first-child {
@@ -211,14 +260,20 @@
   color: #fff;
 }
 
+.form-actions button:first-child:hover {
+  background: var(--accent-hover);
+}
+
 /* 标签 */
 .tag-item {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 6px 16px;
+  padding: 5px 16px;
   cursor: pointer;
   font-size: 13px;
+  border-radius: 0 6px 6px 0;
+  margin-right: 6px;
   transition: background 0.15s;
 }
 
@@ -227,8 +282,9 @@
 }
 
 .tag-item.active {
-  background: rgba(79, 140, 255, 0.12);
+  background: var(--accent-light);
   color: var(--accent);
+  font-weight: 600;
 }
 
 .tag-delete {
@@ -238,6 +294,7 @@
   color: var(--danger);
   font-size: 16px;
   padding: 0 4px;
+  cursor: pointer;
 }
 
 .tag-item:hover .tag-delete {
@@ -247,7 +304,7 @@
 .empty-hint {
   padding: 12px 16px;
   font-size: 12px;
-  color: var(--text-secondary);
+  color: var(--text-muted);
   font-style: italic;
 }
 
@@ -258,7 +315,7 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.6);
+  background: rgba(0, 0, 0, 0.3);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -266,17 +323,19 @@
 }
 
 .modal-box {
-  background: var(--bg-secondary);
+  background: var(--bg-header);
   border: 1px solid var(--border);
   border-radius: 12px;
   padding: 24px 28px;
   text-align: center;
   min-width: 280px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
 }
 
 .modal-box p {
   margin-bottom: 8px;
   font-size: 14px;
+  color: var(--text-primary);
 }
 
 .modal-warning {
@@ -296,8 +355,9 @@
   border-radius: 6px;
   font-size: 13px;
   border: 1px solid var(--border);
-  background: var(--bg-tertiary);
+  background: var(--bg-primary);
   color: var(--text-primary);
+  cursor: pointer;
 }
 
 .btn-danger {

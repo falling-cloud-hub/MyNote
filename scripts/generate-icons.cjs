@@ -78,6 +78,6 @@ function createPNG(w, h, r, g, b) {
 // 生成
 const path = require('path')
 const outDir = path.join(__dirname, '..', 'public')
-writeFileSync(path.join(outDir, 'icon-192.png'), createPNG(192, 192, 79, 140, 255))
-writeFileSync(path.join(outDir, 'icon-512.png'), createPNG(512, 512, 79, 140, 255))
+writeFileSync(path.join(outDir, 'icon-192.png'), createPNG(192, 192, 91, 140, 90))
+writeFileSync(path.join(outDir, 'icon-512.png'), createPNG(512, 512, 91, 140, 90))
 console.log('✅ 图标已生成到 ' + outDir)

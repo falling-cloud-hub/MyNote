@@ -3,7 +3,7 @@
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  background: var(--bg-primary);
+  background: var(--bg-editor);
 }
 
 .empty-editor {
@@ -17,19 +17,22 @@
 }
 
 .empty-icon {
-  font-size: 64px;
+  font-size: 72px;
   display: block;
   margin-bottom: 16px;
+  filter: grayscale(0.1);
 }
 
 .empty-state h2 {
-  font-size: 20px;
+  font-size: 22px;
   color: var(--text-primary);
   margin-bottom: 8px;
+  font-weight: 700;
 }
 
 .empty-state p {
   font-size: 14px;
+  color: var(--text-muted);
 }
 
 /* 工具栏 */
@@ -37,9 +40,9 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 12px 20px;
-  border-bottom: 1px solid var(--border);
-  background: var(--bg-secondary);
+  padding: 14px 24px;
+  border-bottom: 1px solid var(--border-light);
+  background: var(--bg-header);
   gap: 16px;
 }
 
@@ -47,29 +50,55 @@
   flex: 1;
   background: transparent;
   border: none;
-  font-size: 20px;
-  font-weight: 600;
+  font-size: 22px;
+  font-weight: 700;
   color: var(--text-primary);
   outline: none;
   padding: 4px 0;
 }
 
 .title-input::placeholder {
-  color: var(--text-secondary);
+  color: var(--text-muted);
+  font-weight: 400;
 }
 
 .toolbar-actions {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
   flex-shrink: 0;
 }
 
-.folder-select {
-  background: var(--bg-tertiary);
+.toolbar-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--bg-secondary);
   border: 1px solid var(--border);
-  border-radius: 6px;
-  padding: 6px 10px;
+  border-radius: 8px;
+  padding: 8px 14px;
+  color: var(--text-secondary);
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+
+.toolbar-btn:hover {
+  background: var(--bg-tertiary);
+  color: var(--text-primary);
+  border-color: var(--accent);
+}
+
+.toolbar-btn .btn-icon {
+  font-size: 16px;
+}
+
+.folder-select {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 8px 12px;
   color: var(--text-primary);
   font-size: 13px;
   cursor: pointer;
@@ -82,7 +111,7 @@
 
 .save-status {
   font-size: 12px;
-  color: var(--text-secondary);
+  color: var(--text-muted);
   min-width: 70px;
   text-align: right;
 }
@@ -93,9 +122,9 @@
   align-items: center;
   flex-wrap: wrap;
   gap: 6px;
-  padding: 8px 20px;
-  border-bottom: 1px solid var(--border);
-  background: var(--bg-primary);
+  padding: 8px 24px;
+  border-bottom: 1px solid var(--border-light);
+  background: var(--bg-header);
   position: relative;
 }
 
@@ -103,29 +132,37 @@
   display: inline-flex;
   align-items: center;
   gap: 4px;
-  background: rgba(79, 140, 255, 0.15);
+  background: var(--accent-light);
   color: var(--accent);
-  padding: 2px 10px;
-  border-radius: 12px;
+  padding: 3px 12px;
+  border-radius: 14px;
   font-size: 12px;
+  font-weight: 500;
 }
 
 .note-tag button {
   background: none;
   border: none;
   color: var(--accent);
-  font-size: 14px;
+  font-size: 15px;
   padding: 0;
   line-height: 1;
+  cursor: pointer;
+  opacity: 0.6;
+}
+
+.note-tag button:hover {
+  opacity: 1;
 }
 
 .add-tag-btn {
   background: transparent;
-  border: 1px dashed var(--border);
-  color: var(--text-secondary);
-  padding: 2px 10px;
-  border-radius: 12px;
+  border: 1.5px dashed var(--border);
+  color: var(--text-muted);
+  padding: 3px 12px;
+  border-radius: 14px;
   font-size: 12px;
+  cursor: pointer;
   transition: all 0.2s;
 }
 
@@ -138,32 +175,33 @@
 .tag-picker {
   position: absolute;
   top: 100%;
-  left: 20px;
-  background: var(--bg-secondary);
+  left: 24px;
+  background: var(--bg-header);
   border: 1px solid var(--border);
-  border-radius: 8px;
-  padding: 4px;
+  border-radius: 10px;
+  padding: 6px;
   min-width: 160px;
   z-index: 50;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
 }
 
 .tag-picker-item {
-  padding: 8px 12px;
+  padding: 8px 14px;
   cursor: pointer;
   font-size: 13px;
-  border-radius: 4px;
+  border-radius: 6px;
+  transition: background 0.15s;
 }
 
 .tag-picker-item:hover {
-  background: var(--bg-tertiary);
+  background: var(--accent-light);
   color: var(--accent);
 }
 
 .tag-picker-empty {
-  padding: 8px 12px;
+  padding: 8px 14px;
   font-size: 12px;
-  color: var(--text-secondary);
+  color: var(--text-muted);
 }
 
 /* MD 编辑器区域 */
@@ -172,13 +210,55 @@
   overflow: hidden;
 }
 
-/* 覆盖 @uiw/react-md-editor 暗色主题 */
 .md-editor-wrapper .w-md-editor {
   --md-editor-font-family: inherit;
+  box-shadow: none !important;
+  border: none !important;
 }
 
 .md-editor-wrapper .w-md-editor-text-pre > code,
 .md-editor-wrapper .w-md-editor-text-input {
-  font-size: 14px !important;
-  line-height: 1.7 !important;
+  font-size: 15px !important;
+  line-height: 1.8 !important;
+}
+
+.md-editor-wrapper .w-md-editor-toolbar {
+  border-bottom: 1px solid var(--border-light) !important;
+  background: var(--bg-header) !important;
+  padding: 4px 8px !important;
+}
+
+.md-editor-wrapper .w-md-editor-toolbar button {
+  padding: 6px 8px !important;
+  min-width: 32px !important;
+}
+
+.md-editor-wrapper .w-md-editor-toolbar button svg {
+  width: 16px !important;
+  height: 16px !important;
+}
+
+/* 图片 URL 输入栏 */
+.image-input-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 24px;
+  background: var(--bg-secondary);
+  border-bottom: 1px solid var(--border-light);
+}
+
+.image-url-input {
+  flex: 1;
+  padding: 8px 14px;
+  border: 1.5px solid var(--accent);
+  border-radius: 8px;
+  font-size: 13px;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  outline: none;
+}
+
+.image-url-input::placeholder {
+  color: var(--text-muted);
 }
